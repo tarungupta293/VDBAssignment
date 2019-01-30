@@ -13,12 +13,14 @@ import android.widget.Toast;
 import com.example.tarun.vdbassignment.R;
 import com.example.tarun.vdbassignment.appUtils.AppDialogs;
 import com.example.tarun.vdbassignment.appUtils.AppListeners;
+import com.example.tarun.vdbassignment.appUtils.AppPref;
 import com.example.tarun.vdbassignment.beans.Data;
 import com.example.tarun.vdbassignment.beans.ErrorResponse;
 import com.example.tarun.vdbassignment.restapi.ApiClient;
 import com.example.tarun.vdbassignment.restapi.ApiInterface;
 import com.example.tarun.vdbassignment.ui.adapters.RecyclerAdapter;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,11 +42,12 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerAdapter recyclerAdapter;
     private boolean isMaximumDataDownloaded = false;
     private List<Data> dataList = new ArrayList<>();
+    private AppPref appPref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        appPref = new AppPref(this);
         initialiseViews();
         getData(true,false);
     }
@@ -68,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 int lastPos = linearLayoutManager.findLastVisibleItemPosition();
-                //Log.e("last_position",""+lastPos);
+                Log.e("last_position",""+lastPos);
                 if(!isMaximumDataDownloaded && lastPos>dataList.size()-3) {
                     if (lastPos == dataList.size())
                         getData(false, true);
@@ -84,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getData(final boolean isFirstTime, final boolean isLastPositionVisible) {
-        //Log.e("getData",""+pagination+" ");
+        Log.e("getData",""+pagination+" ");
         pagination = pagination+1;
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Call<List<Data>> call = apiService.getResults(String.valueOf(pagination),"15");
@@ -108,6 +111,8 @@ public class MainActivity extends AppCompatActivity {
                         List<Data> list = response.body();
                         dataList.addAll(list);
                         recyclerAdapter.updateAdapter(dataList);
+                        if (isFirstTime)
+                            appPref.saveData(new Gson().toJson(list));
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -127,17 +132,25 @@ public class MainActivity extends AppCompatActivity {
                 else if(isLastPositionVisible)
                     progressBar.setVisibility(View.VISIBLE);
                 try {
-                    AppDialogs.showAlertDialog(MainActivity.this, getString(R.string.oops), getString(R.string.no_internet_message), false, new AppListeners.DialogCallback() {
-                        @Override
-                        public void onClickPositiveButton() {
+                    pagination--;
+                    if (dataList.size() == 0) {
+                        AppDialogs.showAlertDialog(MainActivity.this, getString(R.string.oops), getString(R.string.no_internet_message), false, new AppListeners.DialogCallback() {
+                            @Override
+                            public void onClickPositiveButton() {
+                                List<Data> list = new Gson().fromJson(appPref.getData(), new TypeToken<List<Data>>() {}.getType());
+                                if (list != null && list.size() > 0) {
+                                    pagination = 1;
+                                    dataList.addAll(list);
+                                    recyclerAdapter.updateAdapter(dataList);
+                                }
+                            }
 
-                        }
+                            @Override
+                            public void onClickNegativeButton() {
 
-                        @Override
-                        public void onClickNegativeButton() {
-
-                        }
-                    });
+                            }
+                        });
+                    }
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
