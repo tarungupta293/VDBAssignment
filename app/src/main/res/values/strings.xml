@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">VDBAssignment</string>
+
+    <string name="oops">OOPS!</string>
+    <string name="no_internet_message">Please check internet connection..</string>
+    <string name="no_more_data_to_download">No more data to download</string>
+</resources>

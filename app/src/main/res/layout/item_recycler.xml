@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<android.support.v7.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="@dimen/dim_5"
+    app:cardCornerRadius="@dimen/dim_5"
+    android:layout_marginTop="@dimen/dim_5"
+    android:layout_marginRight="@dimen/dim_5"
+    android:layout_marginLeft="@dimen/dim_5"
+    xmlns:tools="http://schemas.android.com/tools">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/dim_5">
+    
+    <ImageView
+        android:layout_width="@dimen/dim_50"
+        android:layout_height="@dimen/dim_70"
+        android:src="@drawable/ic_photo_album_black_24dp"
+        android:layout_gravity="center_vertical" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="test"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_18"/>
+
+        <TextView
+            android:id="@+id/txtDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dim_3"
+            tools:text="test"
+            android:textSize="@dimen/text_15"
+            android:textColor="@color/grey_text"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/dim_3">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_code_black_24dp"/>
+
+            <TextView
+                android:id="@+id/txtLanguage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dim_3"
+                tools:text="test"
+                android:text="vfcww"
+                android:layout_marginLeft="@dimen/dim_3"
+                android:textSize="@dimen/text_17"
+                android:textColor="@color/grey_text"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dim_8"
+                android:src="@drawable/ic_bug_report_black_24dp"/>
+
+            <TextView
+                android:id="@+id/txtOpenIssuesCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dim_3"
+                tools:text="test"
+                android:layout_marginLeft="@dimen/dim_3"
+                android:textSize="@dimen/text_17"
+                android:textColor="@color/grey_text"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dim_8"
+                android:src="@drawable/ic_face_black_24dp"/>
+
+            <TextView
+                android:id="@+id/txtWatchers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dim_3"
+                tools:text="test"
+                android:layout_marginLeft="@dimen/dim_3"
+                android:textSize="@dimen/text_17"
+                android:textColor="@color/grey_text"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
+</android.support.v7.widget.CardView>
+</RelativeLayout>
